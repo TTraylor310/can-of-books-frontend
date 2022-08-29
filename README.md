@@ -69,6 +69,8 @@ Actual time needed to complete:  -->
 #### Conflict Resolution
 
 1. What will your team do if one person is pulling all the weight while the other person is not contributing?
-    * 
+    * we will reconvine and work through the problems
 2. What will your team do if one person is taking over the project and not letting the other member contribute?
+    * will bring up info to the instuctor if unable to resolve
 3. How will you approach each other and the challenge of building an application knowing that it is impossible for two people to be at the exact same place in understanding and skill level?
+    * work on separate parts until one is too far ahead, then revisit the place we are together

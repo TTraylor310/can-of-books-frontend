@@ -1,9 +1,14 @@
 import { Component } from "react";
+import React from 'react';
+import Header from './Header';
+import Footer from './Footer';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 
 class Profile extends Component {
 
   render() {
-    /* TODO: render information about the developers */
     return <p>Profile page coming soon</p>
   }
 };

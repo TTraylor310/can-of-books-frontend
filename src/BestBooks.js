@@ -1,13 +1,14 @@
 import React from 'react';
 import axios from 'axios';
+import {Carousel, Container} from 'react-bootstrap';
 
 class BestBooks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: []
-    }
-  }
+      books: [],
+      // photoData: [],
+  }}
 
   getBooks = async() => {
     try{
@@ -26,21 +27,45 @@ class BestBooks extends React.Component {
 
   render() {
 
-    /* TODO: render all the books in a Carousel */
-    let bookR = this.state.books.map( b => (
-      <p key="bookR._id">{b.name} - {b.description}</p>
+    let carouselItems = this.state.books.map((book) => (
+
+      <Carousel.Item className={this.props.className} key={book._id}>
+        <img
+          className="picBook"
+          src="./img/book-img.jpg"
+          alt="books or not..."
+        />
+        <Carousel.Caption>
+        <p>{book.name}: {book.description}</p> 
+        </Carousel.Caption>
+      </Carousel.Item>
     ))
+
+
+
+    /* TODO: render all the books in a Carousel */
+    // let bookR = this.state.books.map( b => (
+    //   <p key="bookR._id">{b.name} - {b.description}</p>
+    // ))
+
+
+
     return (
       <>
         <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
-        
-        {bookR}
 
         {this.state.books.length ? (
           <p>Book Carousel coming soon</p>
         ) : (
           <h3>No Books Found :</h3>
-        )}
+        )},
+        {
+          <Container>
+            <Carousel>
+              {carouselItems}
+            </Carousel>
+          </Container>
+        }
       </>
     )
   }
