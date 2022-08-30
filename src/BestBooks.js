@@ -24,6 +24,7 @@ class BestBooks extends React.Component {
   }
 
   handleBookCreate = async (bookInfo) => {
+    console.log(bookInfo);
     try{
       let response = await axios.post(`${process.env.REACT_APP_SERVER}/books`, bookInfo);
       let newBook = response.data;
@@ -48,10 +49,10 @@ handleDelete = async (bookToDelete) => {
   try {
 
     let response = await axios.delete(`${process.env.REACT_APP_SERVER}/books/${bookToDelete._id}`)
-    console.log(response.status);
+    console.log('line 52', response.status);
 
     let filteredBooks = this.state.books.filter ( book => {
-      return book._id !== bookToDelete._id
+      return book._id !== bookToDelete._id;
     })
     this.setState({
       books: filteredBooks,
@@ -67,6 +68,9 @@ handleDelete = async (bookToDelete) => {
   }
 
   render() {
+    console.log(this.state.books);
+
+
 
     let carouselItems = this.state.books.map((book) => (
         <Carousel.Item className={this.props.className} key={book._id}>
@@ -77,9 +81,14 @@ handleDelete = async (bookToDelete) => {
           />
           <Carousel.Caption>
           <p className="bookWords">{book.name}: {book.description}</p> 
+          <form><button variant="primary" type="submit" onClick={() => this.handleDelete(book)}>Remove Book from List?
+          </button></form>
+          {/* <Form><Button variant="primary" type="submit">
+          </Button></Form> */}
           </Carousel.Caption>
         </Carousel.Item>
     ))
+
 
     return (
       <>
@@ -106,7 +115,7 @@ handleDelete = async (bookToDelete) => {
           </Form.Group>
 
           <Button variant="primary" type="submit">
-            Submit
+            Remove Book from List?
           </Button>
         </Form>
       </>
