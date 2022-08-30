@@ -35,14 +35,17 @@ Clone this repo to your own account with the green "Use this template" button. T
 ### Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
 
+<!-- Name of feature:
+Estimate of time needed to complete:
+Start time:
+Finish time:
+Actual time needed to complete: -->
 
-
-
-<!-- Name of feature: 
-Estimate of time needed to complete: 
-Start time: 
-Finish time: 
-Actual time needed to complete:  -->
+Name of feature: Books displayed
+Estimate of time needed to complete: 2 hr
+Start time: 1430
+Finish time: 1700
+Actual time needed to complete: 2.5 hr
 
 #### Logistical
 

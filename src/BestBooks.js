@@ -6,8 +6,7 @@ class BestBooks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: [],
-      // photoData: [],
+      books: []
   }}
 
   getBooks = async() => {
@@ -28,7 +27,6 @@ class BestBooks extends React.Component {
   render() {
 
     let carouselItems = this.state.books.map((book) => (
-
       <Carousel.Item className={this.props.className} key={book._id}>
         <img
           className="picBook"
@@ -41,19 +39,9 @@ class BestBooks extends React.Component {
       </Carousel.Item>
     ))
 
-
-
-    /* TODO: render all the books in a Carousel */
-    // let bookR = this.state.books.map( b => (
-    //   <p key="bookR._id">{b.name} - {b.description}</p>
-    // ))
-
-
-
     return (
       <>
         <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
-
         {this.state.books.length ? (
           <p>Book Carousel coming soon</p>
         ) : (
