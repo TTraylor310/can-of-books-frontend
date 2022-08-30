@@ -115,7 +115,7 @@ handleDelete = async (bookToDelete) => {
           </Form.Group>
 
           <Button variant="primary" type="submit">
-            Remove Book from List?
+            Sumbit a new book?
           </Button>
         </Form>
       </>

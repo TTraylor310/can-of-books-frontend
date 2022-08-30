@@ -42,16 +42,16 @@ Finish time: 1700
 Actual time needed to complete: 2.5 hr
 
 Name of feature: Add new book to shelf
-Estimate of time needed to complete:
-Start time:
-Finish time:
-Actual time needed to complete:
+Estimate of time needed to complete: 2hr
+Start time: 1300
+Finish time: 1400
+Actual time needed to complete: 1hr
 
 Name of feature: Delete old book on shelf
-Estimate of time needed to complete:
-Start time:
-Finish time:
-Actual time needed to complete:
+Estimate of time needed to complete: 2hr
+Start time: 1400
+Finish time: 1500
+Actual time needed to complete: 1hr
 
 #### Logistical
 
