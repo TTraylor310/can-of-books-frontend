@@ -27,29 +27,25 @@ class BestBooks extends React.Component {
   render() {
 
     let carouselItems = this.state.books.map((book) => (
-      <Carousel.Item className={this.props.className} key={book._id}>
-        <img
-          className="picBook"
-          src="./img/book-img.jpg"
-          alt="books or not..."
-        />
-        <Carousel.Caption>
-        <p>{book.name}: {book.description}</p> 
-        </Carousel.Caption>
-      </Carousel.Item>
+        <Carousel.Item className={this.props.className} key={book._id}>
+          <img
+            className="picBook"
+            src="./img/book-img.jpg"
+            alt="books or not..."
+          />
+          <Carousel.Caption>
+          <p className="bookWords">{book.name}: {book.description}</p> 
+          </Carousel.Caption>
+        </Carousel.Item>
     ))
 
     return (
       <>
         <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
-        {this.state.books.length ? (
-          <p>Book Carousel coming soon</p>
-        ) : (
-          <h3>No Books Found :</h3>
-        )},
+        {this.state.books.length ? (<p></p>) : (<h3>No Books Found :</h3>)},
         {
           <Container>
-            <Carousel>
+            <Carousel variant="dark">
               {carouselItems}
             </Carousel>
           </Container>
