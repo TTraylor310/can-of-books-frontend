@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import {Carousel, Container} from 'react-bootstrap';
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 class BestBooks extends React.Component {
   constructor(props) {
@@ -8,6 +10,7 @@ class BestBooks extends React.Component {
     this.state = {
       books: []
   }}
+
 
   getBooks = async() => {
     try{
@@ -19,6 +22,45 @@ class BestBooks extends React.Component {
       console.log('we have an error: ', error.response);
     }
   }
+
+  handleBookCreate = async (bookInfo) => {
+    try{
+      let response = await axios.post(`${process.env.REACT_APP_SERVER}/books`, bookInfo);
+      let newBook = response.data;
+      this.setState({
+        books: [...this.state.books, newBook],
+      });
+    } catch (error) {
+      console.log('error on book postings: ', error.response)
+    }
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.handleBookCreate({
+      name: e.target.formName.value,
+      description: e.target.formDescription.value,
+      status: e.target.formStatus.checked,
+    })
+}
+
+handleDelete = async (bookToDelete) => {
+  try {
+
+    let response = await axios.delete(`${process.env.REACT_APP_SERVER}/books/${bookToDelete._id}`)
+    console.log(response.status);
+
+    let filteredBooks = this.state.books.filter ( book => {
+      return book._id !== bookToDelete._id
+    })
+    this.setState({
+      books: filteredBooks,
+    })
+
+  } catch (error) {
+    console.log(error);
+  }
+}
 
   componentDidMount(){
     this.getBooks();
@@ -50,6 +92,23 @@ class BestBooks extends React.Component {
             </Carousel>
           </Container>
         }
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Group className="mb-3" controlId="formName">
+            <Form.Label>Name</Form.Label>
+            <Form.Control type="name" placeholder="Enter book name" />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formDescription">
+            <Form.Label>Description</Form.Label>
+            <Form.Control type="name" placeholder="Enter brief description of book" />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formStatus">
+            <Form.Check type="checkbox" label="Already read?" />
+          </Form.Group>
+
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+        </Form>
       </>
     )
   }
