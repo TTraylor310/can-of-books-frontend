@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import {Carousel, Container} from 'react-bootstrap';
+// import {Carousel, Container} from 'react-bootstrap';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import BookSlide from './BookSlide';
 
 class BestBooks extends React.Component {
   constructor(props) {
@@ -43,13 +44,12 @@ class BestBooks extends React.Component {
       description: e.target.formDescription.value,
       status: e.target.formStatus.checked,
     })
-}
+  }
 
-handleDelete = async (bookToDelete) => {
+  handleDelete = async (bookToDelete) => {
   try {
-
     let response = await axios.delete(`${process.env.REACT_APP_SERVER}/books/${bookToDelete._id}`)
-    console.log('line 52', response.status);
+    console.log('line 51', response.status);
 
     let filteredBooks = this.state.books.filter ( book => {
       return book._id !== bookToDelete._id;
@@ -61,59 +61,71 @@ handleDelete = async (bookToDelete) => {
   } catch (error) {
     console.log(error);
   }
-}
+  }
+
+  updateBook = async (bookToUpdate) => {
+    
+    try{
+      let url = `${process.env.REACT_APP_SERVER}/books/${bookToUpdate._id}`;
+      let updatedBook = await axios.put(url, bookToUpdate);
+      let updatedBookArr = this.state.books(existingBook => {
+        return existingBook._id === bookToUpdate._id
+        ? updatedBook.data : existingBook
+      });
+      this.setState({
+        book: updatedBookArr,
+      });
+    }catch (error) {
+      console.log('error is on post?: ', error.response)
+    }
+  }
 
   componentDidMount(){
     this.getBooks();
   }
 
   render() {
-    console.log(this.state.books);
 
-
-
-    let carouselItems = this.state.books.map((book) => (
-        <Carousel.Item className={this.props.className} key={book._id}>
-          <img
-            className="picBook"
-            src="./img/book-img.jpg"
-            alt="books or not..."
-          />
-          <Carousel.Caption>
-          <p className="bookWords">{book.name}: {book.description}</p> 
-          <form><button variant="primary" type="submit" onClick={() => this.handleDelete(book)}>Remove Book from List?
-          </button></form>
-          {/* <Form><Button variant="primary" type="submit">
-          </Button></Form> */}
-          </Carousel.Caption>
-        </Carousel.Item>
-    ))
-
+    // let carouselItems = this.state.books.map((book) => (
+    //     <Carousel.Item className={this.props.className} key={book._id}>
+    //       <img
+    //         className="picBook"
+    //         src="./img/book-img.jpg"
+    //         alt="books or not..."
+    //       />
+    //       <Carousel.Caption>
+    //       <p className="bookWords">{book.name}: {book.description}</p> 
+    //       </Carousel.Caption>
+    //       <Button variant="primary" type="submit" onClick={() => this.handleDelete(book)}>Remove Book from List?
+    //       </Button>
+    //     </Carousel.Item>
+    // ))
 
     return (
       <>
-        <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
+        <h2>"The List? Your List? A good List."</h2>
         {this.state.books.length ? (<p></p>) : (<h3>No Books Found :</h3>)},
-        {
-          <Container>
-            <Carousel variant="dark">
-              {carouselItems}
-            </Carousel>
-          </Container>
+        { this.state.books.length >0 &&
+        <>
+          <BookSlide 
+            books = {this.state.books}
+            handleDelete = {this.handleDelete}
+            updateBook = {this.updateBook}
+          />
+        </>
         }
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit} style={{margin:"auto", width:"50%"}}>
           <Form.Group className="mb-3" controlId="formName">
-            <Form.Label>Name</Form.Label>
+            <Form.Label>Book Title:</Form.Label>
             <Form.Control type="name" placeholder="Enter book name" />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formDescription">
-            <Form.Label>Description</Form.Label>
+            <Form.Label>Description:</Form.Label>
             <Form.Control type="name" placeholder="Enter brief description of book" />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formStatus">
             <Form.Check type="checkbox" label="Already read?" />
           </Form.Group>
-
           <Button variant="primary" type="submit">
             Sumbit a new book?
           </Button>
