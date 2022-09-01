@@ -85,27 +85,11 @@ class BestBooks extends React.Component {
   }
 
   render() {
-
-    // let carouselItems = this.state.books.map((book) => (
-    //     <Carousel.Item className={this.props.className} key={book._id}>
-    //       <img
-    //         className="picBook"
-    //         src="./img/book-img.jpg"
-    //         alt="books or not..."
-    //       />
-    //       <Carousel.Caption>
-    //       <p className="bookWords">{book.name}: {book.description}</p> 
-    //       </Carousel.Caption>
-    //       <Button variant="primary" type="submit" onClick={() => this.handleDelete(book)}>Remove Book from List?
-    //       </Button>
-    //     </Carousel.Item>
-    // ))
-
     return (
       <>
         <h2>"The List? Your List? A good List."</h2>
         {this.state.books.length ? (<p></p>) : (<h3>No Books Found :</h3>)},
-        { this.state.books.length >0 &&
+        { this.state.books.length > 0 &&
         <>
           <BookSlide 
             books = {this.state.books}

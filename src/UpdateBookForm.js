@@ -8,11 +8,11 @@ class UpdateBookForm extends React.Component {
     e.preventDefault();
 
     let bookToUpdate = {
-      name: e.target.formName.value || this.props.book.name,
-      description: e.target.formDescription.value || this.props.book.description,
+      name: e.target.name.value || this.props.book.name,
+      description: e.target.description.value || this.props.book.description,
       status: e.target.formStatus.checked || this.props.book.status,
       _id: this.props.book._id, 
-      __v: this.props.book.__v
+      __v: this.props.book.__v,
     }
 
     this.props.updateBooks(bookToUpdate);
@@ -21,7 +21,7 @@ class UpdateBookForm extends React.Component {
 
   render(){
     return(
-      <Container> 
+      <Container>
         <Form onSubmit={this.handleSubmit}>
           <Form.Group controlId="name">
             <Form.Label>Book Title</Form.Label>
