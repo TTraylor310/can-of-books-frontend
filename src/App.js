@@ -15,6 +15,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       books: [],
+      showModal: false
     }
   }
 
@@ -53,6 +54,7 @@ class App extends React.Component {
       status: event.target.status.checked,
       // location: event.target.formLocation.value,
     })
+    this.setState({ showModal: false })
   }
 
   handleDelete = async (bookToDelete) => {
@@ -101,14 +103,19 @@ class App extends React.Component {
   componentDidMount() {
     this.getBooks();
   }
+  closeModal = () => {
+    this.setState({ showModal: false })
+  }
 
   render() {
     console.log(this.state.books);
     return (
       <>
-        <header style={{textAlign:"center"}}>
+        <header style={{ textAlign: "center" }}>
           <h1>Cool Cat Books</h1>
-          <h2>Learning &amp; Formation Shelf</h2>
+          <p>Learning &amp; Formation Shelf</p>
+          <Button style={{marginBottom:"20px"}} variant ='outline-secondary' onClick={() => this.setState({ showModal: true })}>Add Book</Button>
+
         </header>
         <main>
           {
@@ -121,23 +128,38 @@ class App extends React.Component {
               />
             </>
           }
+          <Modal show={this.state.showModal} onHide={this.closeModal} style={{marginTop:"50px"}}>
+            <Modal.Header closeButton>
+              Information
+            </Modal.Header>
+            <Modal.Body >
+              <Form onSubmit={this.handleSubmit} style={{ width: "40%", margin: "auto" }}>
+                <Form.Group className="mb-3" controlId="formName">
+                  <Form.Label>Title</Form.Label>
+                  <Form.Control type="name" placeholder="Enter book" />
+                </Form.Group>
 
-              {/* <Modal show={this.props.showModal} onHide={this.props.handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>{this.props.selectedBeast.title}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body >
-                        <Image className="img-fluid roundedCirce"   src={this.props.selectedBeast.image_url} />
-                        <p>{this.props.selectedBeast.description}</p>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={this.props.handleClose}>
-                            Close
-                        </Button>
-                    </Modal.Footer>
-                </Modal> */}
+                <Form.Group className="mb-3" controlId="formDescription">
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control type="name" placeholder="Enter book description" />
+                </Form.Group>
 
-          <Form onSubmit={this.handleSubmit} style={{ width: "40%", margin: "auto" }}>
+                <Form.Group className="mb-3" controlId="status">
+                  <Form.Check type="checkbox" label="status?" />
+                </Form.Group>
+                <Button variant="outline-dark" style={{ margin: "auto" }} type="submit">
+                  Submit
+                </Button>
+              </Form>
+            </Modal.Body>
+
+            <Modal.Footer>
+
+
+            </Modal.Footer>
+          </Modal>
+
+          {/* <Form onSubmit={this.handleSubmit} style={{ width: "40%", margin: "auto" }}>
             <Form.Group className="mb-3" controlId="formName">
               <Form.Label>Name</Form.Label>
               <Form.Control type="name" placeholder="Enter book" />
@@ -150,10 +172,7 @@ class App extends React.Component {
               <Form.Check type="checkbox" label="status?" />
             </Form.Group>
 
-            <Button variant="outline-dark" style={{margin:"auto"}} type="submit">
-              Submit
-            </Button>
-          </Form>
+          </Form> */}
         </main>
       </>
     );

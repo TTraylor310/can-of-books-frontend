@@ -25,7 +25,7 @@ class UpdateBookForm extends React.Component {
   render() {
     return (
       <Container>
-        <Form onSubmit={this.handleSubmit}>
+        <Form style={{marginTop:"60px"}} onSubmit={this.handleSubmit}>
           <Form.Group controlId="name">
             <Form.Label>Name</Form.Label>
             <Form.Control type="text" placeholder={this.props.book.name} />
