@@ -1,17 +1,20 @@
 import React from 'react';
+// import React, {useState} from 'react';
 import axios from 'axios';
 // import {Carousel, Container} from 'react-bootstrap';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Modal from 'react-bootstrap/Modal';
 import BookSlide from './BookSlide';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class BestBooks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: []
+      books: [],
+      showForm: false,
   }}
-
 
   getBooks = async() => {
     try{
@@ -89,11 +92,24 @@ class BestBooks extends React.Component {
     this.getBooks();
   }
 
+  handleClose = () => {
+    this.setState({
+      showForm: false,
+    });
+  };
+  handleShow = () => {
+    this.setState({
+      showForm: true,
+    });
+  };
+
   render() {
+    
     return (
       <>
         <h2>"The List? Your List? A good List."</h2>
         {this.state.books.length ? (<p></p>) : (<h3>No Books Found :</h3>)},
+
         { this.state.books.length > 0 &&
         <>
           <BookSlide 
@@ -103,22 +119,42 @@ class BestBooks extends React.Component {
           />
         </>
         }
-        <Form onSubmit={this.handleSubmit} style={{margin:"auto", width:"50%"}}>
-          <Form.Group className="mb-3" controlId="formName">
-            <Form.Label>Book Title:</Form.Label>
-            <Form.Control type="name" placeholder="Enter book name" />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formDescription">
-            <Form.Label>Description:</Form.Label>
-            <Form.Control type="name" placeholder="Enter brief description of book" />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formStatus">
-            <Form.Check type="checkbox" label="Already read?" />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Sumbit a new book?
-          </Button>
-        </Form>
+
+        <Button variant="primary" onClick={this.handleShow}>Enter a new Book?</Button>
+        <Modal show={this.state.showForm} onHide={this.handleClose}>
+          <Modal.Dialog onHide={this.handleClose}>
+
+            <Modal.Header closeButton>
+              <Modal.Title>Modal title</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              <Form onSubmit={this.handleSubmit} style={{margin:"auto", width:"50%"}}>
+                <Form.Group className="mb-3" controlId="formName">
+                  <Form.Label>Book Title:</Form.Label>
+                  <Form.Control type="name" placeholder="Enter book name" />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formDescription">
+                  <Form.Label>Description:</Form.Label>
+                  <Form.Control type="name" placeholder="Enter brief description of book" />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formStatus">
+                  <Form.Check type="checkbox" label="Already read?" />
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                  Sumbit a new book?
+                </Button>
+              </Form>
+            </Modal.Body>
+
+            <Modal.Footer>
+              <Button variant="secondary" onClick={this.handleClose}>Close</Button>
+              <Button variant="primary" onClick={this.handleClose}>Save changes</Button>
+            </Modal.Footer>
+
+          </Modal.Dialog>
+        </Modal>
+
       </>
     )
   }
