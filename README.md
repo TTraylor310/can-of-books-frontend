@@ -53,6 +53,12 @@ Start time: 1400
 Finish time: 1500
 Actual time needed to complete: 1hr
 
+Name of feature: Update: form to update and change book
+Estimate of time needed to complete: 2 hr
+Start time: 1300
+Finish time:
+Actual time needed to complete:
+
 #### Logistical
 
 1. What hours will you be available to communicate?
