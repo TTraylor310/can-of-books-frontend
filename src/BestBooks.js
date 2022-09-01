@@ -1,126 +1,84 @@
-import React from 'react';
-import axios from 'axios';
-import {Carousel, Container} from 'react-bootstrap';
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import { Component } from 'react';
+import { Button, Container, ListGroup, Carousel } from 'react-bootstrap';
+import UpdateBookForm from './UpdateBookForm';
 
-class BestBooks extends React.Component {
+class Books extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: []
-  }}
-
-
-  getBooks = async() => {
-    try{
-      let bookData = await axios.get(`${process.env.REACT_APP_SERVER}/books`);
-      this.setState({
-        books: bookData.data,
-      })
-    }catch (error) {
-      console.log('we have an error: ', error.response);
+      showUpdateForm: false
     }
   }
 
-  handleBookCreate = async (bookInfo) => {
-    console.log(bookInfo);
-    try{
-      let response = await axios.post(`${process.env.REACT_APP_SERVER}/books`, bookInfo);
-      let newBook = response.data;
-      this.setState({
-        books: [...this.state.books, newBook],
-      });
-    } catch (error) {
-      console.log('error on book postings: ', error.response)
-    }
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.handleBookCreate({
-      name: e.target.formName.value,
-      description: e.target.formDescription.value,
-      status: e.target.formStatus.checked,
-    })
-}
-
-handleDelete = async (bookToDelete) => {
-  try {
-
-    let response = await axios.delete(`${process.env.REACT_APP_SERVER}/books/${bookToDelete._id}`)
-    console.log('line 52', response.status);
-
-    let filteredBooks = this.state.books.filter ( book => {
-      return book._id !== bookToDelete._id;
-    })
-    this.setState({
-      books: filteredBooks,
-    })
-
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-  componentDidMount(){
-    this.getBooks();
+  handleClose = () => {
+    this.setState({ showUpdateForm: false })
   }
 
   render() {
-    console.log(this.state.books);
+    let books = this.props.books.map(book => (
+      <Carousel.Item variant="dark" style = {{textAlign:"center"}}>
+        <img style = {{marginBottom:"240px"}}src="https://loremflickr.com/640/480"></img>
+        <Carousel.Caption>
+          <h1 >{book.name}</h1>
+          <p>{book.description}</p>
+          <Button variant="outline-danger" onClick={() => this.props.handleDelete(book)} style = {{margin:"5px"}}>Remove from database?</Button>
+          <Button variant="outline-success" onClick={() => this.setState({ showUpdateForm: true }) }style = {{margin:"5px"}}>Update Book</Button>
+          {this.state.showUpdateForm &&
+            <UpdateBookForm
+              handleClose={this.handleClose}
+              book={book}
+              updateBooks={this.props.updateBooks}
+            />
+          }
 
-
-
-    let carouselItems = this.state.books.map((book) => (
-        <Carousel.Item className={this.props.className} key={book._id}>
-          <img
-            className="picBook"
-            src="./img/book-img.jpg"
-            alt="books or not..."
-          />
-          <Carousel.Caption>
-          <p className="bookWords">{book.name}: {book.description}</p> 
-          <form><button variant="primary" type="submit" onClick={() => this.handleDelete(book)}>Remove Book from List?
-          </button></form>
-          {/* <Form><Button variant="primary" type="submit">
-          </Button></Form> */}
-          </Carousel.Caption>
-        </Carousel.Item>
+        </Carousel.Caption>
+      </Carousel.Item >
     ))
-
-
     return (
       <>
-        <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
-        {this.state.books.length ? (<p></p>) : (<h3>No Books Found :</h3>)},
-        {
+
+        {this.props.books.length ?
           <Container>
             <Carousel variant="dark">
-              {carouselItems}
+              {books}
             </Carousel>
           </Container>
+          : <p>nothing</p>
         }
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Group className="mb-3" controlId="formName">
-            <Form.Label>Name</Form.Label>
-            <Form.Control type="name" placeholder="Enter book name" />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formDescription">
-            <Form.Label>Description</Form.Label>
-            <Form.Control type="name" placeholder="Enter brief description of book" />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formStatus">
-            <Form.Check type="checkbox" label="Already read?" />
-          </Form.Group>
-
-          <Button variant="primary" type="submit">
-            Remove Book from List?
-          </Button>
-        </Form>
       </>
     )
   }
 }
 
-export default BestBooks;
+// class Book extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       showUpdateForm: false
+//     }
+//   }
+//   render() {
+//     return (
+//       <>
+//         <ListGroup.Item
+//           key={this.props.key}
+//         >
+//           {this.props.book.name} is a {this.props.book.description}
+//         </ListGroup.Item>
+
+//         <Button onClick={() => this.props.handleDelete(this.props.book)}>Remove from database?</Button>
+//         <Button onClick={() => this.setState({ showUpdateForm: true })}>Update Cat</Button>
+//         { this.state.showUpdateForm && 
+//            <UpdateBookForm 
+//               cat={this.props.cat}
+//               updateCats={this.props.updateBooks}
+//               // handleClose={this.handleClose}
+//            />
+        
+//         }
+//       </>
+//     )
+//   }
+// }
+
+export default Books;
