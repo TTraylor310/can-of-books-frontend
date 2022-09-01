@@ -17,7 +17,7 @@ class Books extends Component {
   render() {
     let books = this.props.books.map(book => (
       <Carousel.Item variant="dark" style = {{textAlign:"center"}}>
-        <img style = {{marginBottom:"240px"}}src="https://loremflickr.com/640/480"></img>
+        <img style = {{marginBottom:"240px"}}src="https://loremflickr.com/640/480" alt="images"></img>
         <Carousel.Caption>
           <h1 >{book.name}</h1>
           <p>{book.description}</p>
