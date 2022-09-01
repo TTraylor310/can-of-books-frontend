@@ -22,17 +22,18 @@ class BookSlide extends Component {
           />
           <Carousel.Caption>
             <p className="bookWords">{book.name}: {book.description}</p> 
-          </Carousel.Caption>
           <Button variant="primary" type="submit" onClick={() => this.props.handleDelete(book)} className="funUpdate">Remove Book from List?
           </Button>
-          <Button variant="primary" type="submit" onClick={() => this.SetState({showUpdateForm: true})} className="funForm">Update Book!
+          <Button variant="primary" type="submit" onClick={() => this.setState({showUpdateForm: true})} className="funForm">Update Book!
           </Button>
           {this.state.showUpdateForm &&
             <UpdateBookForm
               book = {book}
-              updateBooks={this.props.updateBooks}
+              updateBook={this.props.updateBook}
+              showUpdateForm={this.props.showUpdateForm}
             />
           }
+          </Carousel.Caption>
         </Carousel.Item>
     ))
 

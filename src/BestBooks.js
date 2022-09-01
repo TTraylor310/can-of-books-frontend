@@ -67,16 +67,21 @@ class BestBooks extends React.Component {
     
     try{
       let url = `${process.env.REACT_APP_SERVER}/books/${bookToUpdate._id}`;
-      let updatedBook = await axios.put(url, bookToUpdate);
-      let updatedBookArr = this.state.books(existingBook => {
-        return existingBook._id === bookToUpdate._id
-        ? updatedBook.data : existingBook
-      });
-      this.setState({
-        book: updatedBookArr,
-      });
+      console.log(url);
+      console.log(bookToUpdate);
+      await axios.put(url, bookToUpdate);
+      // console.log(updatedBook);
+      // let updatedBookArr = this.state.books.map(existingBook => {
+      //   return existingBook._id === bookToUpdate._id
+      //   ? updatedBook.data : existingBook
+      // });
+      // console.log(updatedBookArr);
+      // this.setState({
+      //   book: updatedBookArr,
+      // });
+      this.getBooks();
     }catch (error) {
-      console.log('error is on post?: ', error.response)
+      console.error('error is on post?: ', error)
     }
   }
 

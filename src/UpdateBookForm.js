@@ -10,12 +10,12 @@ class UpdateBookForm extends React.Component {
     let bookToUpdate = {
       name: e.target.name.value || this.props.book.name,
       description: e.target.description.value || this.props.book.description,
-      status: e.target.formStatus.checked || this.props.book.status,
+      status: e.target.readStat.checked || this.props.book.status,
       _id: this.props.book._id, 
       __v: this.props.book.__v,
     }
 
-    this.props.updateBooks(bookToUpdate);
+    this.props.updateBook(bookToUpdate);
   }
 
 
@@ -31,10 +31,10 @@ class UpdateBookForm extends React.Component {
             <Form.Label>Description?</Form.Label>
             <Form.Control type="text" placeholder={this.props.book.description} />
           </Form.Group>
-          <Form.Group controlId="Read?">
+          <Form.Group controlId="readStat">
             <Form.Check type="checkbox" label="read already?" />
           </Form.Group>
-          <Button type="submit">Update Book</Button>
+          <Button type="submit" onClick={() => this.setState({showUpdateForm: false})}>Update this Book</Button>
         </Form>
       </Container>
     )
