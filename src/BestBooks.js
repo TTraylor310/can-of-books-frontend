@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Button, Container, ListGroup, Carousel } from 'react-bootstrap';
+import { Button, Container, Carousel } from 'react-bootstrap';
 import UpdateBookForm from './UpdateBookForm';
 
 class Books extends Component {
